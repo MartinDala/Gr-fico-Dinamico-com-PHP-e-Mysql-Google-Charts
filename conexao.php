@@ -1,10 +1,25 @@
 <?php
-	$servidor = "localhost";
-	$usuario = "root";
-	$senha = "";
-	$dbname = "loja";
+	use PDO;
+	class Connection{
+		
+		private $server;
+		private $user;
+		private $password;
+		private $dbname;
+		
+		public function __constrcut(){
+			$this->server = 'localhst';
+			$this->user = 'root';
+			$this->password = '';
+			$this->dbname = 'loja';
+		}
 	
-	//Criar a conexao
-	$conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
+		public function connect(){
+			
+			return new PDO("mysql:host={$this->server};dbname={$this->dbname};",$this->user, $this->password);
+			
+		}
+		
+	}
 
 ?>
