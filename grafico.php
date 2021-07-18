@@ -1,6 +1,10 @@
 <?php 
 include_once("conexao.php");
-	
+
+$connection = new Connection;
+
+$setConnection = $connection->connect()
+
 $nomes1= array();
 $vendasl= array();
 $stocksl= array();
@@ -11,18 +15,28 @@ $cor[1]='#0000ff';
 
 $i=0;
 $sql="select * from produtos";
-$resultado = mysqli_query($conn,$sql);
-while ($row = mysqli_fetch_object($resultado)){
-$nomes=$row->nome;
-$vendas=$row->venda;
-$stocks=$row->stock;
+$resultado = mysqli_query($setConnection,$sql);
 
-$nomes1[$i]=$nomes;
-$vendasl[$i]=$vendas;
-$stocksl[$i]=$stocks;
-$i=$i+1;
+$select = $setConnection->prepare($sql);
+$select->execute();
+
+$results = $select->fetchAll();
+foreach($results as $row){
+
+	//esse metodo pode ser melhorado
+	$nomes=$row['nome'];
+	$vendas=$row['venda'];
+	$stocks=$row['stock'];
+
+	$nomes1[$i]=$nomes;
+	$vendasl[$i]=$vendas;
+	$stocksl[$i]=$stocks;
+	$i=$i+1;	
+	
+}
 
 }?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
